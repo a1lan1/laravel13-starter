@@ -35,3 +35,6 @@ opencode.json
 .github/copilot-instructions.md
 AGENTS.md
 GEMINI.md
+.phpstorm.meta.php
+_ide_helper.php
+_ide_helper_models.php

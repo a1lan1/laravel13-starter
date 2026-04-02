@@ -12,10 +12,16 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         User::factory()
+            ->withAdminRole()
             ->withAvatar()
             ->create([
                 'name' => 'Test User',
                 'email' => 'test@example.com',
             ]);
+
+        User::factory(5)
+            ->withBaseRoles()
+            ->withAvatar()
+            ->create();
     }
 }

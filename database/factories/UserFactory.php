@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Database\Factories;
 
 use App\Enums\MediaCollection;
+use App\Enums\RoleEnum;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
@@ -69,6 +70,25 @@ class UserFactory extends Factory
         return $this->afterCreating(function (User $user): void {
             $user->addMediaFromUrl('https://picsum.photos/500')
                 ->toMediaCollection(MediaCollection::UserAvatar->value);
+        });
+    }
+
+    /**
+     * Indicate that the user should have a base set of roles.
+     */
+    public function withBaseRoles(): static
+    {
+        return $this->afterCreating(function (User $user): void {
+            $user->assignRole([
+                RoleEnum::USER->value,
+            ]);
+        });
+    }
+
+    public function withAdminRole(): static
+    {
+        return $this->afterCreating(function (User $user): void {
+            $user->assignRole(RoleEnum::ADMIN->value);
         });
     }
 }

@@ -6,6 +6,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Enums\MediaCollection;
+use App\Enums\RoleEnum;
 use Carbon\CarbonImmutable;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Appends;
@@ -26,6 +27,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist;
 use Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Spatie\Permission\Traits\HasRoles;
 
 /**
  * @property int $id
@@ -66,6 +68,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 class User extends Authenticatable implements HasMedia
 {
     use HasFactory;
+    use HasRoles;
     use InteractsWithMedia;
     use Notifiable;
     use TwoFactorAuthenticatable;
@@ -94,6 +97,11 @@ class User extends Authenticatable implements HasMedia
         $this->addMediaCollection(MediaCollection::UserAvatar->value)
             ->acceptsMimeTypes(['image/jpeg', 'image/png'])
             ->singleFile();
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->hasRole(RoleEnum::ADMIN);
     }
 
     /**

@@ -6,9 +6,12 @@ namespace App\Actions\Fortify;
 
 use App\Concerns\PasswordValidationRules;
 use App\Concerns\ProfileValidationRules;
+use App\Enums\RoleEnum;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
+use Throwable;
 
 class CreateNewUser implements CreatesNewUsers
 {
@@ -19,6 +22,8 @@ class CreateNewUser implements CreatesNewUsers
      * Validate and create a newly registered user.
      *
      * @param  array<string, string>  $input
+     *
+     * @throws Throwable
      */
     public function create(array $input): User
     {
@@ -27,10 +32,12 @@ class CreateNewUser implements CreatesNewUsers
             'password' => $this->passwordRules(),
         ])->validate();
 
-        return User::create([
+        return DB::transaction(fn () => tap(User::create([
             'name' => $input['name'],
             'email' => $input['email'],
             'password' => $input['password'],
-        ]);
+        ]), function (User $user): void {
+            $user->assignRole(RoleEnum::USER->value);
+        }));
     }
 }

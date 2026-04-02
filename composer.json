@@ -20,7 +20,8 @@
         "laravel/wayfinder": "^0.1.14",
         "predis/predis": "^3.4",
         "spatie/laravel-data": "^4.20",
-        "spatie/laravel-medialibrary": "^11.21"
+        "spatie/laravel-medialibrary": "^11.21",
+        "spatie/laravel-permission": "^7.2"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^3.7",

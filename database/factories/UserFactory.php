@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
+use App\Enums\MediaCollection;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
@@ -58,5 +59,16 @@ class UserFactory extends Factory
             'two_factor_recovery_codes' => encrypt(json_encode(['recovery-code-1'])),
             'two_factor_confirmed_at' => now(),
         ]);
+    }
+
+    /**
+     * Indicate that the user should have an avatar.
+     */
+    public function withAvatar(): static
+    {
+        return $this->afterCreating(function (User $user): void {
+            $user->addMediaFromUrl('https://picsum.photos/500')
+                ->toMediaCollection(MediaCollection::UserAvatar->value);
+        });
     }
 }

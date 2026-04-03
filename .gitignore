@@ -45,4 +45,5 @@ _ide_helper_models.php
 /storage/rector
 /coverage
 coverage.xml
+/storage/app/backups
 

@@ -3,10 +3,11 @@ import AppContent from '@/components/AppContent.vue'
 import AppShell from '@/components/AppShell.vue'
 import AppSidebar from '@/components/AppSidebar.vue'
 import AppSidebarHeader from '@/components/AppSidebarHeader.vue'
+import Snackbar from '@/components/Snackbar.vue'
 import type { BreadcrumbItem } from '@/types'
 
 type Props = {
-    breadcrumbs?: BreadcrumbItem[];
+  breadcrumbs?: BreadcrumbItem[];
 };
 
 withDefaults(defineProps<Props>(), {
@@ -16,11 +17,9 @@ withDefaults(defineProps<Props>(), {
 
 <template>
   <AppShell variant="sidebar">
+    <Snackbar />
     <AppSidebar />
-    <AppContent
-      variant="sidebar"
-      class="overflow-x-hidden"
-    >
+    <AppContent variant="sidebar" class="overflow-x-hidden">
       <AppSidebarHeader :breadcrumbs="breadcrumbs" />
       <slot />
     </AppContent>

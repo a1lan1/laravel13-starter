@@ -46,4 +46,5 @@ _ide_helper_models.php
 /coverage
 coverage.xml
 /storage/app/backups
+/data.ms
 

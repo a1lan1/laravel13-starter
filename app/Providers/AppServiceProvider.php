@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Interfaces\NotificationRepositoryInterface;
 use App\Interfaces\NotificationServiceInterface;
+use App\Repositories\EloquentNotificationRepository;
 use App\Services\NotificationService;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Model;
@@ -22,6 +24,7 @@ class AppServiceProvider extends ServiceProvider
      * @var array<string, string>
      */
     public array $bindings = [
+        NotificationRepositoryInterface::class => EloquentNotificationRepository::class,
         NotificationServiceInterface::class => NotificationService::class,
     ];
 

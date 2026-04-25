@@ -167,6 +167,24 @@ services:
       rabbitmq:
         condition: service_healthy
 
+  prometheus:
+    profiles:
+      - monitoring
+    image: prom/prometheus:v2.47.2
+    ports:
+      - '9090:9090'
+    restart: unless-stopped
+    volumes:
+      - './prometheus:/etc/prometheus'
+      - 'prometheus-data:/prometheus'
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    networks:
+      - starter_app
+    depends_on:
+      app:
+        condition: service_healthy
+
   rabbitmq:
     image: 'rabbitmq:3-management-alpine'
     deploy:
@@ -207,4 +225,6 @@ volumes:
   rabbitmq-data:
     driver: local
   meilisearch-data:
+    driver: local
+  prometheus-data:
     driver: local

@@ -11,14 +11,14 @@ import {
 import type { BreadcrumbItem as BreadcrumbItemType } from '@/types'
 
 type Props = {
-    breadcrumbs: BreadcrumbItemType[];
+  breadcrumbs: BreadcrumbItemType[] | null | undefined;
 };
 
 defineProps<Props>()
 </script>
 
 <template>
-  <Breadcrumb>
+  <Breadcrumb v-if="breadcrumbs?.length">
     <BreadcrumbList>
       <template
         v-for="(item, index) in breadcrumbs"

@@ -2,6 +2,7 @@
 import AppContent from '@/components/AppContent.vue'
 import AppHeader from '@/components/AppHeader.vue'
 import AppShell from '@/components/AppShell.vue'
+import Snackbar from '@/components/Snackbar.vue'
 import type { BreadcrumbItem } from '@/types'
 
 type Props = {
@@ -15,6 +16,7 @@ withDefaults(defineProps<Props>(), {
 
 <template>
   <AppShell variant="header">
+    <Snackbar />
     <AppHeader :breadcrumbs="breadcrumbs" />
     <AppContent variant="header">
       <slot />

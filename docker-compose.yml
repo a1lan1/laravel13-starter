@@ -185,6 +185,26 @@ services:
       app:
         condition: service_healthy
 
+  grafana:
+    profiles:
+      - monitoring
+    image: grafana/grafana:10.1.5
+    ports:
+      - '3000:3000'
+    restart: unless-stopped
+    volumes:
+      - 'grafana-data:/var/lib/grafana'
+      - './grafana/provisioning:/etc/grafana/provisioning'
+    environment:
+      - GF_SECURITY_ADMIN_USER=${GF_ADMIN_USER:-admin}
+      - GF_SECURITY_ADMIN_PASSWORD=${GF_ADMIN_PASSWORD:-password}
+      - GF_USERS_ALLOW_SIGN_UP=false
+    networks:
+      - starter_app
+    depends_on:
+      prometheus:
+        condition: service_started
+
   rabbitmq:
     image: 'rabbitmq:3-management-alpine'
     deploy:
@@ -227,4 +247,6 @@ volumes:
   meilisearch-data:
     driver: local
   prometheus-data:
+    driver: local
+  grafana-data:
     driver: local

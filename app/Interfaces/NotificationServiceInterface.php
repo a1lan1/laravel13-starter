@@ -4,9 +4,25 @@ declare(strict_types=1);
 
 namespace App\Interfaces;
 
+use App\Data\NotificationData;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Notifications\DatabaseNotification;
 
 interface NotificationServiceInterface
 {
-    public function sendToUser(User $user, string $message): void;
+    public function sendToUser(User $user, NotificationData $data): void;
+
+    /**
+     * @return Collection<int, DatabaseNotification>
+     */
+    public function getNotificationsForUser(User $user, int $limit = 20): Collection;
+
+    public function getUnreadCount(User $user): int;
+
+    public function markAsRead(User $user, string $id): bool;
+
+    public function markAllAsRead(User $user): void;
+
+    public function delete(User $user, string $id): bool;
 }

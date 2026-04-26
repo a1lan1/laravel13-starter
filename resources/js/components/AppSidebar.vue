@@ -17,6 +17,7 @@ import {
 import { dashboard } from '@/routes'
 import { dashboard as filament } from '@/routes/filament/admin/pages'
 import { index as horizon } from '@/routes/horizon'
+import { defaultMethod as prometheus } from '@/routes/prometheus'
 import type { NavItem } from '@/types'
 
 const mainNavItems: NavItem[] = [
@@ -39,8 +40,38 @@ const footerNavItems: NavItem[] = [
     icon: LayoutGrid
   },
   {
+    title: 'RabbitMQ',
+    href: 'http://localhost:15672',
+    icon: LayoutGrid
+  },
+  {
     title: 'Telescope',
-    href: 'http://localhost:8000/telescope',
+    href: 'http://localhost:8585/telescope',
+    icon: LayoutGrid
+  },
+  {
+    title: 'Meilisearch',
+    href: 'http://localhost:7700',
+    icon: LayoutGrid
+  },
+  {
+    title: 'Mailpit',
+    href: 'http://localhost:8025',
+    icon: LayoutGrid
+  },
+  {
+    title: 'Grafana',
+    href: 'http://localhost:3000/dashboards',
+    icon: LayoutGrid
+  },
+  {
+    title: 'Prometheus',
+    href: 'http://localhost:9090',
+    icon: LayoutGrid
+  },
+  {
+    title: 'Prometheus Metrics',
+    href: prometheus(),
     icon: LayoutGrid
   },
   {
@@ -52,33 +83,27 @@ const footerNavItems: NavItem[] = [
 </script>
 
 <template>
-  <Sidebar
-    collapsible="icon"
-    variant="inset"
-  >
-    <SidebarHeader>
-      <SidebarMenu>
-        <SidebarMenuItem>
-          <SidebarMenuButton
-            size="lg"
-            as-child
-          >
-            <Link :href="dashboard()">
-              <AppLogo />
-            </Link>
-          </SidebarMenuButton>
-        </SidebarMenuItem>
-      </SidebarMenu>
-    </SidebarHeader>
+    <Sidebar collapsible="icon" variant="inset">
+        <SidebarHeader>
+            <SidebarMenu>
+                <SidebarMenuItem>
+                    <SidebarMenuButton size="lg" as-child>
+                        <Link :href="dashboard()">
+                            <AppLogo />
+                        </Link>
+                    </SidebarMenuButton>
+                </SidebarMenuItem>
+            </SidebarMenu>
+        </SidebarHeader>
 
-    <SidebarContent>
-      <NavMain :items="mainNavItems" />
-    </SidebarContent>
+        <SidebarContent>
+            <NavMain :items="mainNavItems" />
+        </SidebarContent>
 
-    <SidebarFooter>
-      <NavFooter :items="footerNavItems" />
-      <NavUser />
-    </SidebarFooter>
-  </Sidebar>
-  <slot />
+        <SidebarFooter>
+            <NavFooter :items="footerNavItems" />
+            <NavUser />
+        </SidebarFooter>
+    </Sidebar>
+    <slot />
 </template>

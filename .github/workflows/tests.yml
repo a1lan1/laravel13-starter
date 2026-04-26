@@ -38,7 +38,7 @@ jobs:
           node-version: '22'
 
       - name: Install Node Dependencies
-        run: npm i
+        run: yarn install --frozen-lockfile
 
       - name: Install Dependencies
         run: composer install --no-interaction --prefer-dist --optimize-autoloader
@@ -49,8 +49,13 @@ jobs:
       - name: Generate Application Key
         run: php artisan key:generate
 
+      - name: Clear Config
+        run: php artisan config:clear --env=testing
+
       - name: Build Assets
-        run: npm run build
+        run: yarn build
 
       - name: Tests
-        run: ./vendor/bin/pest
+        env:
+          APP_ENV: testing
+        run: php artisan test --parallel

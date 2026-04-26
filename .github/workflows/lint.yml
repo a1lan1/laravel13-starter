@@ -38,6 +38,14 @@ jobs:
       - name: Install PHP Dependencies
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
+      - name: Prepare Laravel Application
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+
+      - name: Generate Wayfinder Files
+        run: php artisan wayfinder:generate
+
       - name: Install JS Dependencies
         run: yarn install --frozen-lockfile
 

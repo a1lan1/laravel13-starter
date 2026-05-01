@@ -17,6 +17,7 @@ import {
 import { dashboard } from '@/routes'
 import { dashboard as filament } from '@/routes/filament/admin/pages'
 import { index as horizon } from '@/routes/horizon'
+import { index as logViewer } from '@/routes/log-viewer'
 import { defaultMethod as prometheus } from '@/routes/prometheus'
 import type { NavItem } from '@/types'
 
@@ -47,6 +48,11 @@ const footerNavItems: NavItem[] = [
   {
     title: 'Telescope',
     href: 'http://localhost:8585/telescope',
+    icon: LayoutGrid
+  },
+  {
+    title: 'Log Viewer',
+    href: logViewer(),
     icon: LayoutGrid
   },
   {

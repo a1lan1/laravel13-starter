@@ -7,19 +7,17 @@ import { SidebarProvider } from '@/components/ui/sidebar'
 import { snackbar } from '@/plugins/snackbar'
 import { useAuthStore } from '@/stores/auth'
 import { useNotificationStore } from '@/stores/notification'
-import type {
-  AppVariant,
-  FlashMessage,
-  NotificationData
-} from '@/types'
+import type { AppVariant, FlashMessage, NotificationData } from '@/types'
 
 type Props = {
-  variant?: AppVariant;
+    variant?: AppVariant;
 };
 
 withDefaults(defineProps<Props>(), {
   variant: 'sidebar'
 })
+
+const reverbEnabled = !!import.meta.env.VITE_REVERB_APP_KEY
 
 const page = usePage()
 
@@ -68,7 +66,7 @@ watch(
 )
 
 onMounted(() => {
-  if (user.value) {
+  if (reverbEnabled && user.value) {
     const userChannel = echo().private(`App.Models.User.${user.value.id}`)
 
     userChannel.notification(
@@ -92,10 +90,10 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div v-if="variant === 'header'" class="flex min-h-screen w-full flex-col">
-    <slot />
-  </div>
-  <SidebarProvider v-else :default-open="page.props.sidebarOpen">
-    <slot />
-  </SidebarProvider>
+    <div v-if="variant === 'header'" class="flex min-h-screen w-full flex-col">
+        <slot />
+    </div>
+    <SidebarProvider v-else :default-open="page.props.sidebarOpen">
+        <slot />
+    </SidebarProvider>
 </template>

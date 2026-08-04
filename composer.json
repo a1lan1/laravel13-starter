@@ -37,6 +37,7 @@
         "vladimir-yuldashev/laravel-queue-rabbitmq": "^15.0"
     },
     "require-dev": {
+        "andreapollastri/checkpoint": "^1.1",
         "barryvdh/laravel-ide-helper": "^3.7",
         "brianium/paratest": "^7.20",
         "driftingly/rector-laravel": "^2.2",
